@@ -1,0 +1,69 @@
+<%- include('../../partials/header.ejs') %> 
+<%- include('../../partials/navbar.ejs') %> 
+
+<body>
+    <div class="container">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h3>ARTIGOS</h3>
+                <br>
+                <a class="btn btn-outline-success" href="/adm/articles/new">Novo Artigo</a>
+                <br>
+            </div>
+            
+            <div class="card-body">
+                <table class="table table-bordered table-hover">     <!-- tabela do bootstrap-->
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Título</th>
+                            <th>Slug</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Ações</th>
+                
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% 
+                        articles.forEach(article => {  
+                            %>
+                            <tr>
+                                <td><%= article.id %></td>
+                                <td><%= article.title %></td>
+                                <td><%= article.slug %></td>
+                                <td><%- article.body %></td>
+                                <td><%= article.categoryId %></td>   
+                        
+                                <td>                                                                                                                                                
+                                    <form action="/articles/delete" method="post" style="display: inline-block;" onsubmit="confirmDeletion(event, this);">
+                                        <input type="hidden" name="id" value="<%= article.id%>">
+                                        <button class="btn btn-outline-danger">Deletar</button>
+                                    </form>
+                                </td>
+                                       
+                            </tr>
+                            <%
+                        }) 
+                        %> 
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('../../partials/footer.ejs') %> 
+
+<script>
+    function confirmDeletion ( event, form ) {   //impede que o formulário seja submetido
+        event.preventDefault ();
+        var decision = confirm("Deseja realmente deletar esse Artigo!");
+        if(decision){
+            form.submit(); //se a resposta for verdadeira o formulário será enviado
+        }
+}
+</script>

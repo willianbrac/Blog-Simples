@@ -1,0 +1,60 @@
+<%- include('../../partials/header.ejs') %> 
+<%- include('../../partials/navbar.ejs') %> 
+
+<body>
+    <div class="container">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h1>Novo artigo</h1>
+            </div>
+            
+ 
+            <div class="card-body">
+
+                <!-- |X| Recebe a lista de categorias-->
+                <br>
+                <label><h3>Selecione a Categoria</h3></label>
+                
+                <form action="/articles/save" method="post">
+                
+                    <select name="categoryId" class="form-control">
+                        <% categories.forEach((category) => { %>
+                            <option value="<%= category.id %>">
+                                <%= category.title %>
+                            </option>
+                        <% }) %>
+                    </select>
+
+
+                    <label><h3>Título</h3></label>
+                    <input class = "form-control w-50" type = "text" name="title" placeholder="Defina o titulo de artigo">
+                    <br>
+                    <textarea class="form-control" placeholder="Escreva aqui seu artigo" name="body" id="article"></textarea>
+                    <br>
+                    <button class = "btn-primary" style="border-radius: 3px;">Cadastrar</button> 
+                    <br>    
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('../../partials/footer.ejs') %> 
+<script src="/tinymce/tinymce.min.js"></script>
+
+<!-- |x| configurando o tiny mce -->
+<script>
+    tinymce.init({
+
+        // |x| Definindo a linguagem
+        // |x| O pacote com a linguagem está em /public/tinymce/langs/pt_BR.js
+        language: "pt_BR", 
+        // |x| Selecionando a textArea a ser incrementada   
+        selector: "#article",
+        // |x| Instalando funcionalidades extras
+        plugins: [
+           "addlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons"
+        ]
+    });
+</script>

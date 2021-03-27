@@ -1,0 +1,62 @@
+<%- include('../../partials/header.ejs') %> 
+<%- include('../../partials/navbar.ejs') %> 
+
+<body>
+    <div class="container">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h3>CATEGORIAS CADASTRADAS</h3>
+                <br>
+                <a class="btn btn-outline-success" href="/adm/categories/new">Nova Categoria</a>
+                <br>
+            </div>
+            
+            <div class="card-body">
+                <table class="table table-bordered table-hover">     <!-- tabela do bootstrap-->
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Título</th>
+                            <th>Slug</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                        categories.forEach(category => {  
+                            %>
+                            <tr>
+                                <td><%= category.id %></td>
+                                <td><%= category.title %></td>
+                                <td><%= category.slug %></td>
+                                <td>
+                                    <a href="/adm/categories/edit/<%= category.id %>" class="btn btn-outline-warning">Editar</a>
+                                                                                                                                                <!--this: passando um formulário inteiro como parâmetro-->
+                                    <form action="/categories/delete" method="post" style="display: inline-block;" onsubmit="confirmDeletion(event, this);">  <!-- passando o elemento html que esta solicitando o evento-->
+                                        <input type="hidden" name="id" value="<%= category.id%>">
+                                        <button class="btn btn-outline-danger">Deletar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <%
+                        }) 
+                        %> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<%- include('../../partials/footer.ejs') %> 
+
+<script>
+    function confirmDeletion ( event, form ) {   //impede que o formulário seja submetido
+        event.preventDefault ();
+        var decision = confirm("Deseja realmente deletar essa categoria!");
+        if(decision){
+            form.submit(); //se a resposta for verdadeira o formulário será enviado
+        }
+}
+</script>

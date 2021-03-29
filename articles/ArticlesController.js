@@ -24,16 +24,16 @@ router.post("/articles/save",(req, res) => {
     var body     = req.body.body;
     var category = req.body.categoryId;
 
-    res.json(req.body);
+    //res.json(req.body);
 
-        // Article.create({
-        //     title: title,
-        //     slug: slugify(title),
-        //     body: body,
-        //     categoryId: category
-        // }).then(() => {
-        //     res.redirect("/adm/articles");
-        // });
+        Article.create({
+            title: title,
+            slug: slugify(title),
+            body: body,
+            categoryId: category
+        }).then(() => {
+            res.redirect("/adm/articles");
+        });
 
 });
 

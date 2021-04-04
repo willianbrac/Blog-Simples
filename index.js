@@ -8,6 +8,7 @@ const articlesController   = require("./articles/ArticlesController");
 const categoryModel        = require("./categories/CategoryModel");
 const articleModel         = require("./articles/ArticleModel");
 const Article = require("./articles/ArticleModel");
+const Category = require("./categories/CategoryModel");
 
 
 app.set('view engine', 'ejs');
@@ -34,7 +35,9 @@ app.get("/", (req, res)=>{
     Article.findAll({
         order: [['id','DESC']]
     }).then(articles => {
-        res.render('index', {articles: articles})
+        Category.findAll().then(categories => {
+            res.render('index', {articles: articles, categories: categories});
+        })
     })
 });
 
@@ -46,7 +49,9 @@ app.get("/:slug", (req,res) => {
         }
     }).then(article => {
         if (article != undefined) {
-            res.render("article", {article: article});            
+            Category.findAll().then(categories => {
+                res.render('article', {article: article, categories: categories});
+            })          
         } else {
             res.redirect("/");
         }

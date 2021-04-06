@@ -27,15 +27,13 @@
                     </thead>
                     <tbody>
 
-                        <% 
-                        articles.forEach(article => {  
-                            %>
+                        <% articles.forEach(article => { %>
                             <tr>
                                 <td><%= article.id %></td>
                                 <td><%= article.title %></td>
                                 <td><%= article.slug %></td>
                                 <td><%- article.body %></td>
-                                <td><%= article.categoryId %></td>   
+                                <td><%= article.category.title %></td>   
                         
                                 <td>                                                                                                                                                
                                     <form action="/articles/delete" method="post" style="display: inline-block;" onsubmit="confirmDeletion(event, this);">
@@ -45,9 +43,7 @@
                                 </td>
                                        
                             </tr>
-                            <%
-                        }) 
-                        %> 
+                        <%}) %> 
                        
                     </tbody>
                 </table>

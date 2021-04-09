@@ -8,20 +8,21 @@
             <div class="card-header">
                 <h3>ARTIGOS</h3>
                 <br>
-                <a class="btn btn-outline-success" href="/adm/articles/new">Novo Artigo</a>
+                <a class="btn btn-success" href="/adm/articles/new">NOVO ARTIGO</a>
                 <br>
             </div>
             
             <div class="card-body">
-                <table class="table table-bordered table-hover">     <!-- tabela do bootstrap-->
+                <table class="table table-hover">     <!-- tabela do bootstrap-->
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Título</th>
-                            <th>Slug</th>
-                            <th>Descrição</th>
-                            <th>Categoria</th>
-                            <th>Ações</th>
+                            <th>ITEM</th>
+                            <th>TÍTULO</th>
+                            <th>SLUG</th>
+                            <th>DESCRIÇÃO</th>
+                            <th>CATEGORIA</th>
+                            <th></th>
+                            <th></th>
                 
                         </tr>
                     </thead>
@@ -38,9 +39,18 @@
                                 <td>                                                                                                                                                
                                     <form action="/articles/delete" method="post" style="display: inline-block;" onsubmit="confirmDeletion(event, this);">
                                         <input type="hidden" name="id" value="<%= article.id%>">
-                                        <button class="btn btn-outline-danger">Deletar</button>
+                                        <button class="btn btn-danger">Deletar</button>
                                     </form>
                                 </td>
+
+                                <td>                                                                                                                                                
+                                    <form action="/adm/articles/edit/<%= article.id %>" method="get" style="display: inline-block;">
+                                        <input type="hidden" name="id" value="<%= article.id%>">
+                                        <button class="btn btn-warning">Editar</button>
+                                    </form>
+                                </td>
+
+
                                        
                             </tr>
                         <%}) %> 
@@ -51,6 +61,8 @@
         </div>
     </div>
 </body>
+
+
 
 <%- include('../../partials/footer.ejs') %> 
 

@@ -16,8 +16,10 @@
                 <br>
                 <label><h3>CATEGORIA</h3></label>
                 
-                <form action="#" method="post">
-                
+                <form action="/articles/update" method="post">
+
+                    <input type="hidden" name="id" value="<%= article.id %>">
+
                     <select name="categoryId" class="form-control">
                         <% categories.forEach((category) => { %>
                             <% if(category.id == article.categoryId) { %> 
@@ -31,14 +33,17 @@
                             <% } %>
                             <% }) %> 
                     </select>
+                    
+                    
 
                     <br>
+
                     <label><h3>Título</h3></label>
                     <input class = "form-control w-50" type="text" name="title" value="<%= article.title %> ">
                     <br>
                     <textarea class="form-control" placeholder="Escreva aqui seu artigo" name="body" id="article"></textarea>
                     <br>
-                    <button class = "btn-primary" style="border-radius: 3px;">Atualizar</button> 
+                    <button type="submit" class = "btn-primary" style="border-radius: 3px;">Atualizar</button> 
                     <br>    
                 </form>
             </div>

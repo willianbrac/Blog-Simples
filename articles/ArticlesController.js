@@ -6,7 +6,8 @@ const slugify  = require("slugify");
 
 router.get("/adm/articles", (req, res) => {
     Article.findAll({
-        include: [{ model: Category}]                                 // [x] pegando os dados da categoria do artigo
+        include: [{ model: Category}],
+        order: [['createdAt', 'DESC']]                                 // [x] pegando os dados da categoria do artigo
    }).then(articles => {                                               
         res.render("admin/articles/index", {articles: articles});    // [x] passando os dados para view
     });
@@ -67,10 +68,30 @@ router.get("/adm/articles/edit/:id", (req, res) => {
         } else {
             res.redirect("/");
         }
-    }).catch(err => {
+    }).catch((err) => {
         res.redirect("/");
     })
 });
 
+router.post("/articles/update", (req,res) => {
+    var id = req.body.id
+    var title = req.body.title
+    var body = req.body.body
+    var category = req.body.categoryId
+
+    Article.update({
+        title: title,
+        body: body,
+        categoryId: category, 
+        slug: slugify(title),
+        where:{
+            id: id
+        }
+    }).then(()=>{
+        res.redirect("/adm/articles")
+    }).catch(err => {
+        res.redirect("/adm/articles")
+    })
+})
 module.exports = router;
 

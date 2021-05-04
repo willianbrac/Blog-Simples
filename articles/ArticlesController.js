@@ -79,19 +79,53 @@ router.post("/articles/update", (req,res) => {
     var body = req.body.body
     var category = req.body.categoryId
 
-    Article.update({
-        title: title,
-        body: body,
-        categoryId: category, 
-        slug: slugify(title),
+    Article.update({title: title, body: body, categoryId: category, slug: slugify(title)},{
         where:{
             id: id
         }
     }).then(()=>{
         res.redirect("/adm/articles")
     }).catch(err => {
-        res.redirect("/adm/articles")
+        res.redirect("/")
     })
 })
+
+
+//controle da paginação
+
+router.get("/article/page/:num", (req, res) => {
+    var page = req.params.num
+    var offset = 0
+    if ( isNaN (page) || page == 1 ){
+        offset = 0 
+    } else {
+        offset = (parseInt(page)-1) * 4
+    }
+    
+    Article.findAndCountAll({
+        limit: 4,
+        offset: offset,
+        order: [["id","DESC"]]
+    }).then(articles => {    //busca todoos os elementos e conta a quantidade
+        var next
+        if ( offset + 4 >= articles.count ) {
+            next = false
+        } else {
+            next = true
+        }
+        
+        var result = {
+            page: parseInt(page),
+            next : next,
+            articles : articles
+        }
+
+        Category.findAll().then(categories => {
+            res.render("admin/articles/page", {result: result, categories: categories})
+        })
+        //res.json(result)
+    })                           
+})
+
 module.exports = router;
 

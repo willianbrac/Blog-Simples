@@ -7,7 +7,9 @@ const categoriesController = require("./categories/CategoriesController");
 const articlesController   = require("./articles/ArticlesController");
 const categoryModel        = require("./categories/CategoryModel");
 const articleModel         = require("./articles/ArticleModel");
-const Article = require("./articles/ArticleModel");
+const Article              = require("./articles/ArticleModel");
+const userController       = require("./user/userController");
+const UserModel            = require("./user/UserModel");
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
@@ -26,12 +28,14 @@ conn.authenticate().then(() => {
 
 app.use("/", categoriesController);
 app.use("/", articlesController  );
+app.use("/", userController);
 
 
 
 app.get("/", (req, res)=>{
     articleModel.findAll({
-        order: [['id','DESC']]
+        order: [['id','DESC']],
+        limit: 4
     }).then(articles => {
         categoryModel.findAll().then(categories => {
             res.render('index', {articles: articles, categories: categories});

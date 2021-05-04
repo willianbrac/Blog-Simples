@@ -16,7 +16,7 @@
                 <br>
                 <label><h3>CATEGORIA</h3></label>
                 
-                <form action="/articles/update" method="post">
+                <form method="post" action="/articles/update" >
 
                     <input type="hidden" name="id" value="<%= article.id %>">
 
@@ -33,11 +33,7 @@
                             <% } %>
                             <% }) %> 
                     </select>
-                    
-                    
-
                     <br>
-
                     <label><h3>Título</h3></label>
                     <input class = "form-control w-50" type="text" name="title" value="<%= article.title %> ">
                     <br>
@@ -49,11 +45,13 @@
             </div>
         </div>
     </div>
+
+    <div id="content" style="display: none;">
+        <%- article.body %> 
+    </div>
 </body>
 
-<div id="content" style="display: none;">
-    <%- article.body %> 
-</div>
+
 
 
 <%- include('../../partials/footer.ejs') %> 

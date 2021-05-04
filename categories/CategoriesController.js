@@ -2,12 +2,13 @@ const express  = require("express");
 const router   = express.Router();
 const category = require("./CategoryModel");
 const slugify  = require("slugify");
+const admin    = require("../middlewares/adminAuth");
 
-router.get("/adm/categories/new", (req, res) => {      //renderiza as pagina de cadastro de categoria
+router.get("/adm/categories/new", admin, (req, res) => {      //renderiza as pagina de cadastro de categoria
     res.render("admin/categories/new");
 });
 
-router.post("/categories/save", (req, res) => {        //salva as informações
+router.post("/categories/save", admin, (req, res) => {        //salva as informações
     var title = req.body.title;
 
     if(title != undefined){
@@ -22,13 +23,13 @@ router.post("/categories/save", (req, res) => {        //salva as informações
     }
 });
 
-router.get("/adm/categories", (req,res) => {   //lista as categorias que foram cadastradas
+router.get("/adm/categories", admin, (req,res) => {   //lista as categorias que foram cadastradas
     category.findAll().then(categories => {
         res.render("admin/categories/index", {categories: categories});
     });
 });
 
-router.post("/categories/delete", (req, res) => {
+router.post("/categories/delete", admin, (req, res) => {
     id = req.body.id;
     if (id != undefined) {
         if (!isNaN(id)) {
@@ -47,7 +48,7 @@ router.post("/categories/delete", (req, res) => {
     }
 });
 
-router.get("/adm/categories/edit/:id", (req, res) => {
+router.get("/adm/categories/edit/:id", admin, (req, res) => {
     var id = req.params.id;
 
     if(isNaN(id)){
@@ -64,7 +65,7 @@ router.get("/adm/categories/edit/:id", (req, res) => {
     })
 });
 
-router.post("/categories/update", (req, res) =>{     //rota para atualizar os campos no BD
+router.post("/categories/update", admin, (req, res) =>{     //rota para atualizar os campos no BD
     var id = req.body.id;
     var title = req.body.title;
 
@@ -77,5 +78,9 @@ router.post("/categories/update", (req, res) =>{     //rota para atualizar os ca
     })
 });
 
+router.get("/logout", (req, res) => {
+    req.session.user = undefined;
+    res.redirect("/login");
+})
 module.exports = router;
 

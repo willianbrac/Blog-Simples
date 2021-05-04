@@ -10,12 +10,14 @@ const articleModel         = require("./articles/ArticleModel");
 const Article              = require("./articles/ArticleModel");
 const userController       = require("./user/userController");
 const UserModel            = require("./user/UserModel");
+const Session              = require("express-session");
+
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
+app.use(Session({ secret: "confidential", cookie:{maxAge: 30000}}));
 
 conn.authenticate().then(() => {
     console.log("connected with mysql");
@@ -23,6 +25,10 @@ conn.authenticate().then(() => {
     console.log(err);
 })
 
+//sessions routers
+app.get("/session", (req, res)=>{ });
+
+app.get("/read", (req, res)=>{ });
 
 //------------------------Routers-------------------------------------
 

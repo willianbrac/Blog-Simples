@@ -3,8 +3,9 @@ const router   = express.Router();
 const Category = require("../categories/CategoryModel");             // [x] utilizado a model de categoria
 const Article  = require("./ArticleModel");                          // [x] Importando a model de artigo
 const slugify  = require("slugify");
+const admin    = require("../middlewares/adminAuth");
 
-router.get("/adm/articles", (req, res) => {
+router.get("/adm/articles", admin, (req, res) => {
     Article.findAll({
         include: [{ model: Category}],
         order: [['createdAt', 'DESC']]                                 // [x] pegando os dados da categoria do artigo
@@ -13,14 +14,14 @@ router.get("/adm/articles", (req, res) => {
     });
 });
 
-router.get("/adm/articles/new", (req, res) => {                      // [x] rota para criar uma nova categoria
+router.get("/adm/articles/new", admin, (req, res) => {                      // [x] rota para criar uma nova categoria
     Category.findAll().then(categories => {                          // [x] pegando todas as categorias cadastradas                       
         res.render("admin/articles/new", {categories: categories});  // [x] passando os dados para view
     });
     
 });
 
-router.post("/articles/save",(req, res) => {
+router.post("/articles/save", admin, (req, res) => {
     var title    = req.body.title;
     var body     = req.body.body;
     var category = req.body.categoryId;
@@ -38,7 +39,7 @@ router.post("/articles/save",(req, res) => {
 
 });
 
-router.post("/articles/delete", (req, res) => {
+router.post("/articles/delete", admin, (req, res) => {
     var id = req.body.id;
     if (id != undefined) {
         if (!isNaN(id)) {
@@ -58,7 +59,7 @@ router.post("/articles/delete", (req, res) => {
 });
 
 //recebe o artigo a ser editado
-router.get("/adm/articles/edit/:id", (req, res) => {
+router.get("/adm/articles/edit/:id", admin, (req, res) => {
     var id = req.params.id;
     Article.findByPk(id).then(article => {
         if (article != undefined) {
@@ -73,7 +74,7 @@ router.get("/adm/articles/edit/:id", (req, res) => {
     })
 });
 
-router.post("/articles/update", (req,res) => {
+router.post("/articles/update", admin, (req,res) => {
     var id = req.body.id
     var title = req.body.title
     var body = req.body.body

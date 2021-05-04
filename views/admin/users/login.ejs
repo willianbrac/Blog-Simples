@@ -1,0 +1,25 @@
+<%- include('../../partials/header.ejs') %> 
+<%- include('../../partials/navbar.ejs') %> 
+
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+    <div class="card text-center mt-5 " style="width: 30%;">
+        <div class="card-header">
+            Login
+        </div>
+        <div class="card-body" >
+            <form action="/authenticate" method="POST">
+                <label>Email</label>
+                <input class="form-control" type="email" name="email" placeholder="seuemail@exemplo.com">
+                <br>
+                <label>Senha</label>                
+                <input type="password" name="password" placeholder="***********" style="width: 100%;">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-success btn-block">Criar</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+<%- include('../../partials/footer.ejs') %> 

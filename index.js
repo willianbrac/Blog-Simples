@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use(Session({ secret: "confidential", cookie:{maxAge: 30000}}));
+app.use(Session({ secret: "confidential", cookie:{maxAge: 400000}}));
 
 conn.authenticate().then(() => {
     console.log("connected with mysql");
@@ -61,7 +61,7 @@ app.get("/:slug", (req,res) => {
                 res.render('article', {article: article, categories: categories});
             })          
         } else {
-            res.redirect("/");
+            res.send("artigo não encontrado");
         }
     }).catch( err => {
         console.log("MESSAGE ERROR => " + err);

@@ -5,11 +5,12 @@
         <% result.articles.rows.forEach(article => { %>
             <div class="card bg-ligth text-center mt-3">
                 <div class="card-header">
-                    <%= article.title %>
+                    <h3 style="color: rgb(133, 133, 133)"><%= article.title %></h3>
+                    <%- article.body %>
                 </div>
                 <div class="card-body">
-                    <a href="/<% article.slug %>" class="btn btn-success">Ler Artigo</a>
-                    <%- article.body %>
+                    <a href="/<%= article.slug %>" class="btn btn-success">Ler Artigo</a>
+                    
                 </div>
             </div>
         <% }); %> 

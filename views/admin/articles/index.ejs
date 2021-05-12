@@ -2,6 +2,11 @@
 <%- include('../../partials/navbar.ejs') %> 
 
     <div class="container">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmDeletionModal">
+            Abrir modal
+        </button>
+
+
         <br>
         <div class="card">
             <div class="card-header">
@@ -60,11 +65,35 @@
         </div>
     </div>
 
+<!-- modal para confirmação de deleção -->
+    <div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title " id="exampleModalLabel">Confirmação</h5>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+              </button>
+              
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title text-center">Deseja excluir o Artigo?</h5>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 40%;">Não</button>
+              <button type="button" class="btn btn-danger ">Sim</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 <%- include('../../partials/footer.ejs') %> 
 
 <script>
     function confirmDeletion ( event, form ) {   //impede que o formulário seja submetido
         event.preventDefault ();
+
         var decision = confirm("Deseja realmente deletar esse Artigo!");
         if(decision){
             form.submit(); //se a resposta for verdadeira o formulário será enviado
